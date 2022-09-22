@@ -43,6 +43,7 @@ def main():
     arg('--n-epochs', type=int, default=100)
     arg('--lr', type=float, default=0.0001)
     arg('--workers', type=int, default=12)
+    arg('--cropped_train', type=str, default='cropped_train')
     arg('--train_crop_height', type=int, default=1024)
     arg('--train_crop_width', type=int, default=1280)
     arg('--val_crop_height', type=int, default=1024)
@@ -105,7 +106,7 @@ def main():
             pin_memory=torch.cuda.is_available()
         )
 
-    train_file_names, val_file_names = get_split(args.fold)
+    train_file_names, val_file_names = get_split(args.fold, args.cropped_train)
     print('num train = {}, num_val = {}'.format(len(train_file_names), len(val_file_names)))
 
     def train_transform(p=1):

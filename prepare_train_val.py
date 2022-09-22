@@ -1,13 +1,15 @@
 from prepare_data import data_path
 
 
-def get_split(fold):
+def get_split(fold, cropped_train):
     folds = {0: [4, 2],
              1: [2, 4],
              2: [3, 4],
              3: [1, 4]}
 
-    train_path = data_path / 'cropped_train'
+    train_path = data_path / cropped_train
+
+    print(f'My train path is: {train_path}')
 
     train_file_names = []
     val_file_names = []

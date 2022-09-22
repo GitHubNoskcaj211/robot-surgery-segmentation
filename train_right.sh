@@ -4,6 +4,7 @@ for i in 0 1 2 3
 do
     python train.py \
         --device-ids 0 \
+        --cropped_train "cropped_train_right" \
         --batch-size 3 \
         --fold $i \
         --workers 0 \
