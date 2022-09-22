@@ -10,8 +10,8 @@ from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import torch.backends.cudnn
 
-from models import UNet11, LinkNet34, UNet, UNet16, AlbuNet
-from loss import LossBinary, LossMulti
+from models import UNet11
+from loss import LossBinary
 from dataset import RoboticsDataset
 import utils
 import sys
@@ -27,11 +27,9 @@ from albumentations import (
     CenterCrop
 )
 
-moddel_list = {'UNet11': UNet11,
-               'UNet16': UNet16,
-               'UNet': UNet,
-               'AlbuNet': AlbuNet,
-               'LinkNet34': LinkNet34}
+import random
+
+moddel_list = {'UNet11': UNet11}
 
 
 def main():
@@ -50,7 +48,7 @@ def main():
     arg('--val_crop_height', type=int, default=1024)
     arg('--val_crop_width', type=int, default=1280)
     arg('--type', type=str, default='binary', choices=['binary', 'parts', 'instruments'])
-    arg('--model', type=str, default='UNet', choices=moddel_list.keys())
+    arg('--model', type=str, default='UNet11', choices=moddel_list.keys())
 
     args = parser.parse_args()
 
@@ -108,7 +106,6 @@ def main():
         )
 
     train_file_names, val_file_names = get_split(args.fold)
-
     print('num train = {}, num_val = {}'.format(len(train_file_names), len(val_file_names)))
 
     def train_transform(p=1):
@@ -126,7 +123,7 @@ def main():
             CenterCrop(height=args.val_crop_height, width=args.val_crop_width, p=1),
             Normalize(p=1)
         ], p=p)
-
+    
     train_loader = make_loader(train_file_names, shuffle=True, transform=train_transform(p=1), problem_type=args.type,
                                batch_size=args.batch_size)
     valid_loader = make_loader(val_file_names, transform=val_transform(p=1), problem_type=args.type,
@@ -139,7 +136,7 @@ def main():
         valid = validation_binary
     else:
         valid = validation_multi
-
+    
     utils.train(
         init_optimizer=lambda lr: Adam(model.parameters(), lr=lr),
         args=args,

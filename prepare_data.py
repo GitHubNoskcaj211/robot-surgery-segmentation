@@ -8,9 +8,9 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 
-data_path = Path('data')
+data_path = Path('Dataset')
 
-train_path = data_path / 'train'
+train_path = data_path / 'instrument_1_4_training'
 
 cropped_train_path = data_path / 'cropped_train'
 
@@ -24,7 +24,7 @@ instrument_factor = 32
 
 
 if __name__ == '__main__':
-    for instrument_index in range(1, 9):
+    for instrument_index in range(1, 5):
         instrument_folder = 'instrument_dataset_' + str(instrument_index)
 
         (cropped_train_path / instrument_folder / 'images').mkdir(exist_ok=True, parents=True)
@@ -46,8 +46,7 @@ if __name__ == '__main__':
             old_h, old_w, _ = img.shape
 
             img = img[h_start: h_start + height, w_start: w_start + width]
-            cv2.imwrite(str(cropped_train_path / instrument_folder / 'images' / (file_name.stem + '.jpg')), img,
-                        [cv2.IMWRITE_JPEG_QUALITY, 100])
+            cv2.imwrite(str(cropped_train_path / instrument_folder / 'images' / (file_name.stem + '.png')), img)
 
             mask_binary = np.zeros((old_h, old_w))
             mask_parts = np.zeros((old_h, old_w))

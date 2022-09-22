@@ -62,6 +62,7 @@ def train(args, model, criterion, train_loader, valid_loader, validation, init_o
     report_each = 10
     log = root.joinpath('train_{fold}.log'.format(fold=fold)).open('at', encoding='utf8')
     valid_losses = []
+    
     for epoch in range(epoch, n_epochs + 1):
         model.train()
         random.seed()
@@ -73,7 +74,7 @@ def train(args, model, criterion, train_loader, valid_loader, validation, init_o
             mean_loss = 0
             for i, (inputs, targets) in enumerate(tl):
                 inputs = cuda(inputs)
-
+                
                 with torch.no_grad():
                     targets = cuda(targets)
 

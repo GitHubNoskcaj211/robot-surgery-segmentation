@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 from torch.utils.data import Dataset
 import prepare_data
-from albumentations.torch.functional import img_to_tensor
+from albumentations.pytorch.functional import img_to_tensor
 
 
 class RoboticsDataset(Dataset):
@@ -50,7 +50,7 @@ def load_mask(path, problem_type):
     elif problem_type == 'instruments':
         factor = prepare_data.instrument_factor
         mask_folder = 'instruments_masks'
-
-    mask = cv2.imread(str(path).replace('images', mask_folder).replace('jpg', 'png'), 0)
+    
+    mask = cv2.imread(str(path).replace('images', mask_folder), 0)
 
     return (mask / factor).astype(np.uint8)
