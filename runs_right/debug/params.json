@@ -1,0 +1,17 @@
+{
+ "batch_size": 3,
+ "cropped_train": "cropped_train_right",
+ "device_ids": "0",
+ "fold": 3,
+ "jaccard_weight": 0.3,
+ "lr": 5e-05,
+ "model": "UNet11",
+ "n_epochs": 10,
+ "root": "runs/debug",
+ "train_crop_height": 1024,
+ "train_crop_width": 1280,
+ "type": "binary",
+ "val_crop_height": 1024,
+ "val_crop_width": 1280,
+ "workers": 0
+}
