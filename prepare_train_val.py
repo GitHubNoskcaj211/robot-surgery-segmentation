@@ -14,7 +14,7 @@ def get_split(fold, cropped_train):
     train_file_names = []
     val_file_names = []
 
-    for instrument_id in range(1, 4):
+    for instrument_id in range(1, 5):
         if instrument_id in folds[fold]:
             val_file_names += list((train_path / ('instrument_dataset_' + str(instrument_id)) / 'images').glob('*'))
         else:
